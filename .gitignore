@@ -1,0 +1,7 @@
+// Write a .gitignore file for the project
+
+# Ignore all files in the build directory
+build/
+
+# Ignore all files in the bin directory
+bin/    

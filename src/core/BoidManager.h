@@ -1,0 +1,24 @@
+#pragma once
+#include <vector>
+#include <memory>
+#include "Boid.h"
+#include "ui/BoidsParams.h"
+
+namespace Boids {
+
+class BoidManager {
+public:
+    BoidManager();
+    ~BoidManager();
+
+    void initialize(const BoidsParams& params);
+    void update(float deltaTime, const BoidsParams& params);
+    void render() const;
+
+    const std::vector<std::unique_ptr<Boid>>& getBoids() const;
+
+private:
+    std::vector<std::unique_ptr<Boid>> m_Boids;
+};
+
+} // namespace Boids
