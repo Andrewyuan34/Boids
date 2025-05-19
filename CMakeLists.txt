@@ -35,6 +35,13 @@ set(IMGUI_SOURCES
 set(GLFW_DIR ${THIRDPARTY_DIR}/glfw)
 add_subdirectory(${GLFW_DIR} ${CMAKE_BINARY_DIR}/glfw)
 
+add_library(imgui STATIC ${IMGUI_SOURCES})
+target_include_directories(imgui PUBLIC
+    ${IMGUI_DIR}
+    ${IMGUI_DIR}/backends
+    ${GLFW_DIR}/include
+)
+
 add_executable(${PROJECT_NAME} 
     src/main.cpp
     src/ui/ImGuiLayer.cpp
@@ -46,21 +53,17 @@ add_executable(${PROJECT_NAME}
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
-    ${IMGUI_SOURCES}
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src  
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
-    ${IMGUI_DIR}
-    ${IMGUI_DIR}/backends
-    ${GLFW_DIR}/include
-
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
+    imgui
 )
 
 # 添加测试可执行文件
