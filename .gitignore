@@ -4,4 +4,4 @@
 build/
 
 # Ignore all files in the bin directory
-bin/    
+Cursor_Reminder
