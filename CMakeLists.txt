@@ -66,7 +66,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     imgui
 )
 
-# 添加测试可执行文件
+# Add test executable
 add_executable(${PROJECT_NAME}_tests
     tests/main_test.cpp
 )
@@ -77,3 +77,15 @@ target_link_libraries(${PROJECT_NAME}_tests PRIVATE
 )
 
 add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+
+
+option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
+if(CLANG_TIDY_ENABLE)
+    find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+    if(CLANG_TIDY_EXE)
+        message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+        set_target_properties(${PROJECT_NAME} PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+    else()
+        message(STATUS "clang-tidy not found.")
+    endif()
+endif()
