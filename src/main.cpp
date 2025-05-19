@@ -7,6 +7,7 @@
 #define GL_SILENCE_DEPRECATION
 #include <GLFW/glfw3.h>
 #include <memory>
+#include "core/Simulation.h"
 
 class Application {
 private:
@@ -15,6 +16,7 @@ private:
     bool m_Running = true;
     std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
     BoidsParams m_BoidsParams;
+    Boids::Simulation m_Simulation;
 
     Application() = default;
     ~Application() = default;
@@ -49,6 +51,7 @@ static void glfw_error_callback(int error, const char* description) {
 }
 
 bool Application::init() {
+    m_Simulation.initialize(m_BoidsParams);
     // Initialize GLFW
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return false;
@@ -71,7 +74,6 @@ bool Application::init() {
     m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
         if (ImGui::CollapsingHeader("Global Simulation Parameters", ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::SliderInt("Boid Count", &m_BoidsParams.boidCount, 10, 1000);
-            ImGui::SliderFloat("World Size", &m_BoidsParams.worldSize, 100.0f, 2000.0f);
             ImGui::SliderFloat("Simulation Speed", &m_BoidsParams.simulationSpeed, 0.1f, 5.0f);
         }
         if (ImGui::CollapsingHeader("Movement Parameters", ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -88,12 +90,20 @@ bool Application::init() {
     return true;
 }
 
+
+// TODO: Add a viewport class to handle info about the viewport and the camera
 void Application::mainLoop() {
     while (!glfwWindowShouldClose(m_Window) && m_Running) {
+
+        glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
 
         // Use ImGui layer to update and render
         m_ImGuiLayer->OnUpdate(0.0f); 
+        
+        // Simulation update and render
+        m_Simulation.update(0.001f, m_BoidsParams);
+        m_Simulation.render();
 
         glfwSwapBuffers(m_Window);
     }

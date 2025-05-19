@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "ui/BoidsParams.h"
 
 namespace Boids {
 
@@ -12,14 +13,18 @@ public:
 
     void setPosition(const glm::vec2& pos);
     void setVelocity(const glm::vec2& vel);
+    
+    // apply force to boid
+    void applyForce(const glm::vec2& force);
 
-    // up
-    void update(float deltaTime);
+    // update boid's position and velocity
+    void update(float deltaTime, const BoidsParams& params);
 
     void render() const;
 private:
     glm::vec2 m_Position;
     glm::vec2 m_Velocity;
+    glm::vec2 m_Acceleration;
 };
 
 } // namespace Boids

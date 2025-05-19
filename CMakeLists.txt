@@ -64,6 +64,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     imgui
+    opengl32
 )
 
 # Add test executable
@@ -77,7 +78,6 @@ target_link_libraries(${PROJECT_NAME}_tests PRIVATE
 )
 
 add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
-
 
 option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
 if(CLANG_TIDY_ENABLE)
