@@ -1,1 +1,2 @@
 - TODO: Encapsulate a Viewport/WindowInfo class to map between window and simulation space
+- TODO: Add appropriate force for steering when getting close to the boundary

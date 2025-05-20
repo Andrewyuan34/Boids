@@ -25,9 +25,21 @@ void Boid::update(float deltaTime, const BoidsParams& params) {
 }
 
 void Boid::render() const {
-    glPointSize(5.0f);
+    // Draw point
+    glPointSize(5.0f);  
     glBegin(GL_POINTS);
     glVertex2f(m_Position.x, m_Position.y);
+    glEnd();
+
+    // Draw direction line
+    glm::vec2 dir = glm::normalize(m_Velocity);
+    float arrowLength = 0.01f;
+    glm::vec2 end = m_Position + dir * arrowLength;
+
+    glLineWidth(2.0f);
+    glBegin(GL_LINES);
+    glVertex2f(m_Position.x, m_Position.y);
+    glVertex2f(end.x, end.y);
     glEnd();
 }
 

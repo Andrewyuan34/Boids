@@ -2,7 +2,7 @@
 
 struct BoidsParams {
     // Global simulation parameters
-    int boidCount = 100;
+    int boidCount = 10;
     float worldSize = 500.0f;
     float simulationSpeed = 1.0f;
 
