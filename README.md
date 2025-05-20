@@ -1,2 +1,9 @@
-- TODO: Encapsulate a Viewport/WindowInfo class to map between window and simulation space
-- TODO: Add appropriate force for steering when getting close to the boundary
+# Boids Simulation
+
+### Core Features
+⬜ Implement Viewport/WindowInfo class
+✅ Add boundary force steering
+⬜ 2D -> 3D
+⬜ Enhance flock animation
+⬜ Dynamic skybox implementation
+
