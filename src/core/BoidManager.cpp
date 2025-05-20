@@ -24,11 +24,13 @@ void BoidManager::update(float deltaTime, const BoidsParams& params) {
         glm::vec2 separation = computeSeparation(*boid, params);
         glm::vec2 alignment  = computeAlignment(*boid, params);
         glm::vec2 cohesion   = computeCohesion(*boid, params);
+        glm::vec2 boundaryForce = computeBoundaryForce(boid->getPosition(), params.boundaryMin, params.boundaryMax, 0.2f, params.boundaryForceMax);
 
         glm::vec2 steering =
             params.separationWeight * separation +
             params.alignmentWeight * alignment +
-            params.cohesionWeight * cohesion;
+            params.cohesionWeight * cohesion +
+            boundaryForce * params.boundaryWeight;
 
         boid->applyForce(steering);
     }
@@ -110,6 +112,28 @@ glm::vec2 BoidManager::computeCohesion(const Boid& boid, const BoidsParams& para
         return desired;
     }
     return glm::vec2(0.0f);
+}
+
+glm::vec2 BoidManager::computeBoundaryForce(const glm::vec2& pos, float boundaryMin, float boundaryMax, float buffer, float maxForce) const {
+    glm::vec2 force(0.0f);
+
+    if (pos.x < boundaryMin + buffer) {
+        float dist = boundaryMin + buffer - pos.x;
+        force.x += (dist / buffer) * maxForce;
+    } else if (pos.x > boundaryMax - buffer) {
+        float dist = pos.x - (boundaryMax - buffer);
+        force.x -= (dist / buffer) * maxForce;
+    }
+
+    if (pos.y < boundaryMin + buffer) {
+        float dist = boundaryMin + buffer - pos.y;
+        force.y += (dist / buffer) * maxForce;
+    } else if (pos.y > boundaryMax - buffer) {
+        float dist = pos.y - (boundaryMax - buffer);
+        force.y -= (dist / buffer) * maxForce;
+    }
+
+    return force;
 }
 
 void BoidManager::render() const {

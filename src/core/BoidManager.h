@@ -17,7 +17,7 @@ public:
     glm::vec2 computeSeparation(const Boid& boid, const BoidsParams& params) const;
     glm::vec2 computeAlignment(const Boid& boid, const BoidsParams& params) const;
     glm::vec2 computeCohesion(const Boid& boid, const BoidsParams& params) const;
-
+    glm::vec2 computeBoundaryForce(const glm::vec2& pos, float boundaryMin, float boundaryMax, float buffer, float maxForce) const;
 
     const std::vector<std::unique_ptr<Boid>>& getBoids() const;
 
