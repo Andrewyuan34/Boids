@@ -10,8 +10,8 @@ BoidManager::~BoidManager() = default;
 void BoidManager::initialize(const BoidsParams& params) {
     m_Boids.clear();
     for (int i = 0; i < params.boidCount; ++i) {
-        float x = (static_cast<float>(rand()) / RAND_MAX  * 2.0f - 1.0f) / 50.0f;
-        float y = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) / 50.0f;
+        float x = (static_cast<float>(rand()) / RAND_MAX  * 2.0f - 1.0f) / 10.0f;
+        float y = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) / 10.0f;
         glm::vec2 pos(x, y);
         float angle = static_cast<float>(rand()) / RAND_MAX * 2.0f * 3.14159f;
         glm::vec2 vel(cos(angle) / 50.0f, sin(angle) / 50.0f);

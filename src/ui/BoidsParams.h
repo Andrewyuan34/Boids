@@ -2,24 +2,24 @@
 
 struct BoidsParams {
     // Global simulation parameters
-    int boidCount = 100;
+    int boidCount = 50;
     float worldSize = 500.0f;
     float simulationSpeed = 1.0f;
 
     // Movement parameters
-    float maxSpeed = 0.3f;
-    float maxForce = 0.05f;
+    float maxSpeed = 0.5f;
+    float maxForce = 0.03f;
 
     // Behavior weights
-    float alignmentWeight = 0.35f;
-    float separationWeight = 0.37f;
+    float alignmentWeight = 0.3f;
+    float separationWeight = 0.38f;
     float cohesionWeight = 0.32f;
     float boundaryWeight = 0.1f;
 
-    // Behavior radii
-    float separationRadius = 5.0f;
-    float alignmentRadius = 5.0f;
-    float cohesionRadius = 5.0f;
+    // Behavior radius
+    float separationRadius = 25.0f;
+    float alignmentRadius = 25.0f;
+    float cohesionRadius = 25.0f;
 
 	// Boundary parameters
 	float boundaryMin = -1.0f;

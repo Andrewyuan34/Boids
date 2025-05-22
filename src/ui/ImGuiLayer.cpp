@@ -46,10 +46,21 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void RenderWindows() {
+    void RenderWindows(const Viewport* viewport) {
+        int winWidth = viewport->getWidth();
+        int winHeight = viewport->getHeight();
+
+        // TODO： will parameterize these data later
+        float posXRatio = 0.05f, posYRatio = 0.05f;
+        float widthRatio = 0.2f, heightRatio = 0.35f;
+
         for (const auto& [name, callback] : windows) {
-            ImVec2 pos(20, 20);
+            ImVec2 pos(winWidth * posXRatio, winHeight * posYRatio);
+            ImVec2 size(winWidth * widthRatio, winHeight * heightRatio);
+
             ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+            ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+
             ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
             callback();
             ImGui::End();
@@ -100,9 +111,9 @@ void ImGuiLayer::OnDetach() {
     // Additional cleanup can be done here
 }
 
-void ImGuiLayer::OnUpdate(float deltaTime) {
+void ImGuiLayer::OnUpdate(float deltaTime, const Viewport* viewport) {
     pImpl->BeginFrame();
-    pImpl->RenderWindows();
+    pImpl->RenderWindows(viewport);
     pImpl->EndFrame();
 }
 

@@ -8,6 +8,8 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include "core/Simulation.h"
+#include "viewport/Viewport.h"
+#include <memory>
 
 class Application {
 private:
@@ -17,6 +19,7 @@ private:
     std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
     BoidsParams m_BoidsParams;
     Boids::Simulation m_Simulation;
+    std::unique_ptr<Viewport> m_Viewport = std::make_unique<Viewport>();
 
     Application() = default;
     ~Application() = default;
@@ -98,8 +101,13 @@ void Application::mainLoop() {
         glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
 
+        // Update viewport
+        int width = 0, height = 0;
+        glfwGetWindowSize(m_Window, &width, &height);
+        m_Viewport->resize(width, height);
+
         // Use ImGui layer to update and render
-        m_ImGuiLayer->OnUpdate(0.0f); 
+        m_ImGuiLayer->OnUpdate(0.0f, m_Viewport.get()); 
         
         // Simulation update and render
         m_Simulation.update(0.001f, m_BoidsParams);
