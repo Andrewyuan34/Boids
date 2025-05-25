@@ -64,10 +64,11 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
 )
 
+find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     imgui
-    opengl32
+    OpenGL::GL
 )
 
 # Add test executable
