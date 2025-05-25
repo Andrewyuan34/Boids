@@ -1,11 +1,12 @@
 # Boids Simulation
 
-### Core Features
+### Features
 ✅ Implement Viewport/WindowInfo class  
 ✅ Add boundary force steering  
 ⬜ 2D -> 3D  
 ⬜ Enhance flock animation  
-⬜ Dynamic skybox implementation  
+⬜ Dynamic skybox implementation
+⬜ Integrate clang-format in pre-commit hook and CI workflow
 
 ### Usage
 
