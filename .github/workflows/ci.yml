@@ -1,9 +1,9 @@
-name: Linux Build
+name: CI Build
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  build-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,3 +16,19 @@ jobs:
       - name: Build
         run: |
           ./build.sh --tidy --test
+
+  build-windows-clang:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install dependencies
+        run: |
+          choco install ninja cmake llvm -y
+          # Optionally, add LLVM to PATH if not already
+          set "PATH=C:\Program Files\LLVM\bin;%PATH%"
+      - name: Build
+        shell: cmd
+        run: |
+          build.bat --release --tidy

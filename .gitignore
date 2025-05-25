@@ -5,3 +5,6 @@ build/
 
 # Ignore all files in the bin directory
 Cursor_Reminder
+
+build-msvc/
+build-clang/
