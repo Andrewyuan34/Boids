@@ -1,0 +1,18 @@
+name: Linux Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build clang cmake libglfw3-dev libglm-dev libx11-dev libxrandr-dev libxi-dev libxxf86vm-dev libxcursor-dev libxinerama-dev libwayland-dev wayland-protocols libxkbcommon-dev
+      - name: Build
+        run: |
+          ./build.sh --tidy --test
