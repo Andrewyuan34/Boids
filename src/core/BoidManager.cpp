@@ -1,6 +1,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "BoidManager.h"
 #include <glm/gtx/norm.hpp>
+#include <random>
 
 namespace Boids {
 
@@ -9,12 +10,20 @@ BoidManager::~BoidManager() = default;
 
 void BoidManager::initialize(const BoidsParams& params) {
     m_Boids.clear();
+
+    // Create random number engine and distribution
+    std::mt19937 rng(std::random_device{}());
+    std::uniform_real_distribution<float> pos_dist(-0.1f, 0.1f);
+    std::uniform_real_distribution<float> angle_dist(0.0f, 2.0f * 3.14159f);
+
     for (int i = 0; i < params.boidCount; ++i) {
-        float x = (static_cast<float>(rand()) / RAND_MAX  * 2.0f - 1.0f) / 10.0f;
-        float y = (static_cast<float>(rand()) / RAND_MAX * 2.0f - 1.0f) / 10.0f;
+        float x = pos_dist(rng);
+        float y = pos_dist(rng);
         glm::vec2 pos(x, y);
-        float angle = static_cast<float>(rand()) / RAND_MAX * 2.0f * 3.14159f;
-        glm::vec2 vel(cos(angle) / 50.0f, sin(angle) / 50.0f);
+
+        float angle = angle_dist(rng);
+        glm::vec2 vel(std::cos(angle) / 50.0f, std::sin(angle) / 50.0f);
+
         m_Boids.push_back(std::make_unique<Boid>(pos, vel));
     }
 }
