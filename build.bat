@@ -2,7 +2,7 @@
 setlocal
 
 :: Set default values
-set BUILD_TYPE=Debug
+set BUILD_TYPE=Release
 set RUN_TESTS=OFF
 set ENABLE_TIDY=OFF
 set USE_MSVC=OFF
@@ -10,7 +10,7 @@ set USE_MSVC=OFF
 :: Parse command line arguments
 :parse_args
 if "%~1"=="" goto :end_parse_args
-if /i "%~1"=="--release" set BUILD_TYPE=Release
+if /i "%~1"=="--debug" set BUILD_TYPE=Debug
 if /i "%~1"=="--test" set RUN_TESTS=ON
 if /i "%~1"=="--tidy" set ENABLE_TIDY=ON
 if /i "%~1"=="--msvc" set USE_MSVC=ON

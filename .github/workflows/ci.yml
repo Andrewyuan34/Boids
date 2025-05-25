@@ -15,7 +15,7 @@ jobs:
           sudo apt-get install -y ninja-build clang cmake libglfw3-dev libglm-dev libx11-dev libxrandr-dev libxi-dev libxxf86vm-dev libxcursor-dev libxinerama-dev libwayland-dev wayland-protocols libxkbcommon-dev
       - name: Build
         run: |
-          ./build.sh --tidy --test
+          ./build.sh --tidy --test --debug
 
   build-windows-clang:
     runs-on: windows-latest
@@ -31,4 +31,4 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          build.bat --release --tidy
+          build.bat --tidy --debug

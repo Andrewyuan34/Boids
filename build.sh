@@ -13,15 +13,15 @@ set -e
 # -----------------------------------------------------------------------------
 
 # Default build options
-BUILD_TYPE=Debug
+BUILD_TYPE=Release
 RUN_TESTS=OFF
 ENABLE_TIDY=OFF
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --release)
-            BUILD_TYPE=Release
+        --debug)
+            BUILD_TYPE=Debug
             shift
             ;;
         --test)
