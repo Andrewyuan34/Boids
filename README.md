@@ -34,3 +34,6 @@ build.bat --release --msvc
 ### Script Options
 - `--debug`
 - `--tidy`
+---
+
+For contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
