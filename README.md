@@ -40,12 +40,13 @@ git clone --recursive <git_repo>
 cd Boids
 
 # Windows
-// Dependency: Visual Studio or LLVM/Clang, Ninja and CMake
+// Dependency: LLVM/Clang, Ninja and CMake
 // Default Compiler is Clang
 build.bat 
 // executable is under build-clang/bin/Boids.exe
 
 // or use msvc
+// Dependency: Visual Studio and CMake
 build.bat --msvc
 // after running the script, open .sln file to run the program
 
