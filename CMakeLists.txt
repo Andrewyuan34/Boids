@@ -15,9 +15,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 # Add third party library path
 set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
+set(GLAD_DIR ${THIRDPARTY_DIR}/glad)
 
 set(GTEST_DIR ${THIRDPARTY_DIR}/googletest)
 add_subdirectory(${GTEST_DIR} ${CMAKE_BINARY_DIR}/googletest)
+
+add_subdirectory(${GLAD_DIR} glad)
+
 
 # Add ImGui source files
 set(IMGUI_DIR ${THIRDPARTY_DIR}/imgui)
@@ -62,12 +66,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewport
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
 )
-
 find_package(OpenGL REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     imgui
+    glad  
     OpenGL::GL
 )
 
