@@ -63,10 +63,10 @@ glm::vec3 BoidManager::computeSeparation(const Boid& boid, const BoidsParams& pa
 
     for (const auto& other : m_Boids) {
         if (&boid == other.get()) continue;
-        glm::vec3 diff = other->getPosition() - pos;
+        glm::vec3 diff = pos - other->getPosition();
         float dist2 = glm::length2(diff);
         if (dist2 < params.separationRadius * params.separationRadius && dist2 > 0.0f) {
-            force -= (other->getPosition() - pos) / std::sqrt(dist2);
+            force += diff / std::sqrt(dist2);
             count++;
         }
     }

@@ -68,25 +68,45 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
 )
+
+# 添加核心库
+add_library(boids_core STATIC
+    src/core/Boid.cpp
+    src/core/Boid.h
+    src/core/BoidManager.cpp
+    src/core/BoidManager.h
+    src/core/Simulation.cpp
+    src/core/Simulation.h
+)
+
+target_include_directories(boids_core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
+    ${GLFW_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
+)
+
+# 为 boids_core 添加链接库
+target_link_libraries(boids_core PUBLIC
+    glfw
+    glad
+    OpenGL::GL
+)
+
+# 查找 OpenGL
 find_package(OpenGL REQUIRED)
+
+# 主程序链接核心库
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     imgui
     glad  
     OpenGL::GL
+    boids_core
 )
 
-# Add test executable
-add_executable(${PROJECT_NAME}_tests
-    tests/main_test.cpp
-)
-
-target_link_libraries(${PROJECT_NAME}_tests PRIVATE
-    GTest::gtest
-    GTest::gtest_main
-)
-
-add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+# 添加测试目录
+add_subdirectory(tests)
 
 option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
 if(CLANG_TIDY_ENABLE)
