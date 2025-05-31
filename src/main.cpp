@@ -5,6 +5,7 @@
 #include "imgui_impl_opengl3.h"
 #include <stdio.h>
 #define GL_SILENCE_DEPRECATION
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <memory>
 #include "core/Simulation.h"
@@ -69,6 +70,22 @@ bool Application::init() {
     glfwMakeContextCurrent(m_Window);
     glfwSwapInterval(1);
 
+    // Initialize GLAD
+    if (!gladLoadGL()) {
+        printf("Failed to initialize GLAD\n");
+        return false;
+    }
+
+    // Print OpenGL version
+    printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+    printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+
+    // Set clear color to dark gray
+    glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+    
+    // Enable depth testing
+    glEnable(GL_DEPTH_TEST);
+
     // Create and initialize ImGui layer
     m_ImGuiLayer = Boids::ImGuiLayer::Create(m_Window);
     m_ImGuiLayer->OnAttach();
@@ -97,13 +114,15 @@ bool Application::init() {
 // TODO: Add a viewport class to handle info about the viewport and the camera
 void Application::mainLoop() {
     while (!glfwWindowShouldClose(m_Window) && m_Running) {
+        // Clear both color and depth buffer
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glClear(GL_COLOR_BUFFER_BIT);
         glfwPollEvents();
 
         // Update viewport
         int width = 0, height = 0;
         glfwGetWindowSize(m_Window, &width, &height);
+        glViewport(0, 0, width, height);
         m_Viewport->resize(width, height);
 
         // Use ImGui layer to update and render
