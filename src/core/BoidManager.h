@@ -1,4 +1,5 @@
 #pragma once
+#define GLM_ENABLE_EXPERIMENTAL
 #include <vector>
 #include <memory>
 #include "Boid.h"
@@ -14,10 +15,10 @@ public:
     void initialize(const BoidsParams& params);
     void update(float deltaTime, const BoidsParams& params);
     void render() const;
-    glm::vec2 computeSeparation(const Boid& boid, const BoidsParams& params) const;
-    glm::vec2 computeAlignment(const Boid& boid, const BoidsParams& params) const;
-    glm::vec2 computeCohesion(const Boid& boid, const BoidsParams& params) const;
-    glm::vec2 computeBoundaryForce(const glm::vec2& pos, float boundaryMin, float boundaryMax, float buffer, float maxForce) const;
+    glm::vec3 computeSeparation(const Boid& boid, const BoidsParams& params) const;
+    glm::vec3 computeAlignment(const Boid& boid, const BoidsParams& params) const;
+    glm::vec3 computeCohesion(const Boid& boid, const BoidsParams& params) const;
+    glm::vec3 computeBoundaryForce(const glm::vec3& pos, float boundaryMin, float boundaryMax, float buffer, float maxForce) const;
 
     const std::vector<std::unique_ptr<Boid>>& getBoids() const;
 
