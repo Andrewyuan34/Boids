@@ -9,17 +9,16 @@ on:
 jobs:
 
   format-check:
-  name: Code Format Check
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-      with:
-        submodules: recursive
-    - name: Install clang-format
-      run: sudo apt-get update && sudo apt-get install -y clang-format
-    - name: Run clang-format check
-      run: |
-        clang-format --dry-run --Werror $(find src tests -name '*.cpp' -o -name '*.h')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Run clang-format check
+        run: |
+          clang-format --dry-run --Werror $(find src tests -name '*.cpp' -o -name '*.h')
 
   build-linux:
     runs-on: ubuntu-latest
