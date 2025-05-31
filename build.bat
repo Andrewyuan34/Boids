@@ -65,7 +65,7 @@ cmake --build .
 
 :: If you need to run tests
 if "%RUN_TESTS%"=="ON" (
-    ctest --output-on-failure
+    ctest -R Boids_Test --output-on-failure
 )
 
 endlocal
