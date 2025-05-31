@@ -84,7 +84,7 @@ target_include_directories(boids_core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
 )
 
-# 为 boids_core 添加链接库
+# Add link libraries for boids_core
 target_link_libraries(boids_core PUBLIC
     glfw
     glad

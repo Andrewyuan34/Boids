@@ -41,9 +41,9 @@ cd %BUILD_DIR%
 :: Let system decide the generator
 if "%USE_MSVC%"=="ON" (
     if "%ENABLE_TIDY%"=="ON" (
-        cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DCLANG_TIDY_ENABLE=ON
+        cmake .. -DCLANG_TIDY_ENABLE=ON
     ) else (
-        cmake .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE%
+        cmake ..
     )
 ) else (
     if "%ENABLE_TIDY%"=="ON" (
@@ -61,11 +61,20 @@ if "%USE_MSVC%"=="ON" (
 )
 
 :: Build project
-cmake --build .
+if "%USE_MSVC%"=="ON" (
+    :: For MSVC, specify the configuration
+    cmake --build . --config %BUILD_TYPE%
+) else (
+    cmake --build .
+)
 
 :: If you need to run tests
 if "%RUN_TESTS%"=="ON" (
-    ctest -R Boids_Test --output-on-failure
+    if "%USE_MSVC%"=="ON" (
+        ctest -C %BUILD_TYPE% -R Boids_Test --output-on-failure
+    ) else (
+        ctest -R Boids_Test --output-on-failure
+    )
 )
 
 endlocal
