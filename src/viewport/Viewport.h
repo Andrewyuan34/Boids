@@ -3,10 +3,8 @@
 #include <glm/glm.hpp>
 
 class Viewport {
-public:
-    Viewport(int width, int height, 
-             float simMinX, float simMaxX, 
-             float simMinY, float simMaxY);
+   public:
+    Viewport(int width, int height, float simMinX, float simMaxX, float simMinY, float simMaxY);
 
     Viewport() = default;
 
@@ -25,7 +23,7 @@ public:
     glm::vec2 windowToSim(const glm::vec2& windowPos) const;
     glm::vec2 simToWindow(const glm::vec2& simPos) const;
 
-private:
+   private:
     int m_Width, m_Height;
     float m_SimMinX, m_SimMaxX, m_SimMinY, m_SimMaxY;
 };

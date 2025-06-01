@@ -1,29 +1,31 @@
 // src/ui/ImGuiLayer.cpp
 #include "ImGuiLayer.h"
+
+#include <GLFW/glfw3.h>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-#include <GLFW/glfw3.h>
-#include <unordered_map>
+
 #include <string>
+#include <unordered_map>
 
 namespace Boids {
 
 class ImGuiLayer::Impl {
-public:
+   public:
     Impl(GLFWwindow* window) : window(window) {
         // Initialize ImGui
         IMGUI_CHECKVERSION();
         context = ImGui::CreateContext();
         ImGui::SetCurrentContext(context);
-        
+
         // Configure ImGui
         ImGuiIO& io = ImGui::GetIO();
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable keyboard navigation
 
         // Set style
         ImGui::StyleColorsDark();
-        
+
         // Set platform/renderer backend
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 130");
@@ -61,7 +63,8 @@ public:
             ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
             ImGui::SetNextWindowSize(size, ImGuiCond_Always);
 
-            ImGui::Begin(name.c_str(), nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
+            ImGui::Begin(name.c_str(), nullptr,
+                         ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
             callback();
             ImGui::End();
         }
@@ -69,7 +72,7 @@ public:
 
     // Window management
     std::unordered_map<std::string, WindowCallback> windows;
-    
+
     // Theme management
     void SaveTheme(const std::string& name) {
         // TODO: Implement theme saving
@@ -88,7 +91,7 @@ public:
         // TODO: Implement layout loading
     }
 
-private:
+   private:
     GLFWwindow* window;
     ImGuiContext* context;
 };
@@ -125,32 +128,20 @@ void ImGuiLayer::RegisterWindow(const std::string& name, WindowCallback callback
     pImpl->windows[name] = std::move(callback);
 }
 
-void ImGuiLayer::UnregisterWindow(const std::string& name) {
-    pImpl->windows.erase(name);
-}
+void ImGuiLayer::UnregisterWindow(const std::string& name) { pImpl->windows.erase(name); }
 
-void ImGuiLayer::SetTheme(const std::string& themeName) {
-    pImpl->LoadTheme(themeName);
-}
+void ImGuiLayer::SetTheme(const std::string& themeName) { pImpl->LoadTheme(themeName); }
 
-void ImGuiLayer::SaveTheme(const std::string& themeName) {
-    pImpl->SaveTheme(themeName);
-}
+void ImGuiLayer::SaveTheme(const std::string& themeName) { pImpl->SaveTheme(themeName); }
 
-void ImGuiLayer::LoadTheme(const std::string& themeName) {
-    pImpl->LoadTheme(themeName);
-}
+void ImGuiLayer::LoadTheme(const std::string& themeName) { pImpl->LoadTheme(themeName); }
 
-void ImGuiLayer::SaveLayout(const std::string& layoutName) {
-    pImpl->SaveLayout(layoutName);
-}
+void ImGuiLayer::SaveLayout(const std::string& layoutName) { pImpl->SaveLayout(layoutName); }
 
-void ImGuiLayer::LoadLayout(const std::string& layoutName) {
-    pImpl->LoadLayout(layoutName);
-}
+void ImGuiLayer::LoadLayout(const std::string& layoutName) { pImpl->LoadLayout(layoutName); }
 
 void ImGuiLayer::ResetLayout() {
     // TODO: Implement layout reset
 }
 
-} // namespace Boids
+}  // namespace Boids

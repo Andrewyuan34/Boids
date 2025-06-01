@@ -1,9 +1,10 @@
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
-#include <functional>
+
 #include "../viewport/Viewport.h"
 
 // Forward declarations
@@ -14,7 +15,7 @@ namespace Boids {
 
 // Use PIMPL pattern to hide implementation details
 class ImGuiLayer {
-public:
+   public:
     // Use smart pointer to manage resources
     static std::unique_ptr<ImGuiLayer> Create(GLFWwindow* window);
     ~ImGuiLayer();
@@ -50,7 +51,7 @@ public:
     void LoadLayout(const std::string& layoutName);
     void ResetLayout();
 
-private:
+   private:
     // Use PIMPL pattern to hide implementation details
     class Impl;
     std::unique_ptr<Impl> pImpl;
@@ -59,4 +60,4 @@ private:
     ImGuiLayer();
 };
 
-} // namespace Boids
+}  // namespace Boids

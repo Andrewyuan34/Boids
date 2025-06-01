@@ -1,4 +1,5 @@
 #include "BoidManager.h"
+
 #include <glm/gtx/norm.hpp>
 #include <random>
 
@@ -20,16 +21,12 @@ void BoidManager::initialize(const BoidsParams& params) {
     for (int i = 0; i < params.boidCount; ++i) {
         float x = pos_dist(rng);
         float y = pos_dist(rng);
-        float z = height_dist(rng);  
+        float z = height_dist(rng);
         glm::vec3 pos(x, y, z);
 
         float angle = angle_dist(rng);
-        float speed = 1.0f / 50.0f;  
-        glm::vec3 vel(
-            std::cos(angle) * speed,
-            std::sin(angle) * speed,
-            height_dist(rng) * speed  
-        );
+        float speed = 1.0f / 50.0f;
+        glm::vec3 vel(std::cos(angle) * speed, std::sin(angle) * speed, height_dist(rng) * speed);
 
         m_Boids.push_back(std::make_unique<Boid>(pos, vel));
     }
@@ -38,15 +35,15 @@ void BoidManager::initialize(const BoidsParams& params) {
 void BoidManager::update(float deltaTime, const BoidsParams& params) {
     for (auto& boid : m_Boids) {
         glm::vec3 separation = computeSeparation(*boid, params);
-        glm::vec3 alignment  = computeAlignment(*boid, params);
-        glm::vec3 cohesion   = computeCohesion(*boid, params);
-        glm::vec3 boundaryForce = computeBoundaryForce(boid->getPosition(), params.boundaryMin, params.boundaryMax, 0.2f, params.boundaryForceMax);
+        glm::vec3 alignment = computeAlignment(*boid, params);
+        glm::vec3 cohesion = computeCohesion(*boid, params);
+        glm::vec3 boundaryForce =
+            computeBoundaryForce(boid->getPosition(), params.boundaryMin, params.boundaryMax, 0.2f,
+                                 params.boundaryForceMax);
 
-        glm::vec3 steering =
-            params.separationWeight * separation +
-            params.alignmentWeight * alignment +
-            params.cohesionWeight * cohesion +
-            boundaryForce * params.boundaryWeight;
+        glm::vec3 steering = params.separationWeight * separation +
+                             params.alignmentWeight * alignment + params.cohesionWeight * cohesion +
+                             boundaryForce * params.boundaryWeight;
 
         boid->applyForce(steering);
     }
@@ -74,8 +71,7 @@ glm::vec3 BoidManager::computeSeparation(const Boid& boid, const BoidsParams& pa
         force /= (float)count;
         if (glm::length(force) > 0.0f)
             force = glm::normalize(force) * params.maxSpeed - boid.getVelocity();
-        if (glm::length(force) > params.maxForce)
-            force = glm::normalize(force) * params.maxForce;
+        if (glm::length(force) > params.maxForce) force = glm::normalize(force) * params.maxForce;
     }
     return force;
 }
@@ -130,7 +126,8 @@ glm::vec3 BoidManager::computeCohesion(const Boid& boid, const BoidsParams& para
     return glm::vec3(0.0f);
 }
 
-glm::vec3 BoidManager::computeBoundaryForce(const glm::vec3& pos, float boundaryMin, float boundaryMax, float buffer, float maxForce) const {
+glm::vec3 BoidManager::computeBoundaryForce(const glm::vec3& pos, float boundaryMin,
+                                            float boundaryMax, float buffer, float maxForce) const {
     glm::vec3 force(0.0f);
 
     if (pos.x < boundaryMin + buffer) {
@@ -166,8 +163,6 @@ void BoidManager::render() const {
     }
 }
 
-const std::vector<std::unique_ptr<Boid>>& BoidManager::getBoids() const {
-    return m_Boids;
-}
+const std::vector<std::unique_ptr<Boid>>& BoidManager::getBoids() const { return m_Boids; }
 
-} // namespace Boids
+}  // namespace Boids

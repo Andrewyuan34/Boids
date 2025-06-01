@@ -1,19 +1,21 @@
-#include "ui/ImGuiLayer.h"
-#include "ui/BoidsParams.h"
+#include <stdio.h>
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include <stdio.h>
+#include "ui/BoidsParams.h"
+#include "ui/ImGuiLayer.h"
 #define GL_SILENCE_DEPRECATION
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <memory>
-#include "core/Simulation.h"
-#include "viewport/Viewport.h"
+#include <glad/glad.h>
+
 #include <memory>
 
+#include "core/Simulation.h"
+#include "viewport/Viewport.h"
+
 class Application {
-private:
+   private:
     static Application* s_Instance;
     GLFWwindow* m_Window = nullptr;
     bool m_Running = true;
@@ -32,7 +34,7 @@ private:
     void mainLoop();
     void cleanup();
 
-public:
+   public:
     static Application& get() {
         if (!s_Instance) {
             s_Instance = new Application();
@@ -82,7 +84,7 @@ bool Application::init() {
 
     // Set clear color to dark gray
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    
+
     // Enable depth testing
     glEnable(GL_DEPTH_TEST);
 
@@ -92,7 +94,8 @@ bool Application::init() {
 
     // TODO: Make sure the widget is adjusted to the window size
     m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
-        if (ImGui::CollapsingHeader("Global Simulation Parameters", ImGuiTreeNodeFlags_DefaultOpen)) {
+        if (ImGui::CollapsingHeader("Global Simulation Parameters",
+                                    ImGuiTreeNodeFlags_DefaultOpen)) {
             ImGui::SliderInt("Boid Count", &m_BoidsParams.boidCount, 10, 1000);
             ImGui::SliderFloat("Simulation Speed", &m_BoidsParams.simulationSpeed, 0.1f, 5.0f);
         }
@@ -110,7 +113,6 @@ bool Application::init() {
     return true;
 }
 
-
 // TODO: Add a viewport class to handle info about the viewport and the camera
 void Application::mainLoop() {
     while (!glfwWindowShouldClose(m_Window) && m_Running) {
@@ -126,8 +128,8 @@ void Application::mainLoop() {
         m_Viewport->resize(width, height);
 
         // Use ImGui layer to update and render
-        m_ImGuiLayer->OnUpdate(0.0f, m_Viewport.get()); 
-        
+        m_ImGuiLayer->OnUpdate(0.0f, m_Viewport.get());
+
         // Simulation update and render
         m_Simulation.update(0.001f, m_BoidsParams);
         m_Simulation.render();
@@ -144,6 +146,4 @@ void Application::cleanup() {
     glfwTerminate();
 }
 
-int main(int, char**) {
-    return Application::get().run();
-}
+int main(int, char**) { return Application::get().run(); }

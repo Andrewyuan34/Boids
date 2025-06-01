@@ -5,7 +5,7 @@
 namespace Boids {
 
 class Simulation {
-public:
+   public:
     Simulation();
     ~Simulation();
 
@@ -15,8 +15,8 @@ public:
 
     BoidManager& getBoidManager();
 
-private:
+   private:
     BoidManager m_BoidManager;
 };
 
-} // namespace Boids
+}  // namespace Boids
