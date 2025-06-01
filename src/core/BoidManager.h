@@ -1,6 +1,7 @@
 #pragma once
+#ifndef GLM_ENABLE_EXPERIMENTAL
 #define GLM_ENABLE_EXPERIMENTAL
-#include <memory>
+#endif
 #include <vector>
 
 #include "Boid.h"

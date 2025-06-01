@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "../viewport/Viewport.h"
+#include "../Utils/WindowInfo.h"
 
 // Forward declarations
 struct GLFWwindow;
@@ -29,7 +29,7 @@ class ImGuiLayer {
     // Lifecycle management
     void OnAttach();
     void OnDetach();
-    void OnUpdate(float deltaTime, const Viewport* viewport);
+    void OnUpdate(float deltaTime, const WindowInfo* windowInfo);
     void OnRender();
 
     // Window management

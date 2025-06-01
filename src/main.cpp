@@ -11,8 +11,8 @@
 
 #include <memory>
 
+#include "Utils/WindowInfo.h"
 #include "core/Simulation.h"
-#include "viewport/Viewport.h"
 
 class Application {
    private:
@@ -22,7 +22,11 @@ class Application {
     std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
     BoidsParams m_BoidsParams;
     Boids::Simulation m_Simulation;
-    std::unique_ptr<Viewport> m_Viewport = std::make_unique<Viewport>();
+    std::unique_ptr<WindowInfo> m_WindowInfo = std::make_unique<WindowInfo>();
+
+    // TODO: Camera System Integration (First PR)
+    // 1. Add camera member
+    // std::unique_ptr<Camera> m_Camera;
 
     Application() = default;
     ~Application() = default;
@@ -92,6 +96,10 @@ bool Application::init() {
     m_ImGuiLayer = Boids::ImGuiLayer::Create(m_Window);
     m_ImGuiLayer->OnAttach();
 
+    // TODO: Camera System Integration (First PR)
+    // 1. Initialize camera
+    // m_Camera = std::make_unique<Camera>();
+
     // TODO: Make sure the widget is adjusted to the window size
     m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
         if (ImGui::CollapsingHeader("Global Simulation Parameters",
@@ -113,7 +121,6 @@ bool Application::init() {
     return true;
 }
 
-// TODO: Add a viewport class to handle info about the viewport and the camera
 void Application::mainLoop() {
     while (!glfwWindowShouldClose(m_Window) && m_Running) {
         // Clear both color and depth buffer
@@ -125,10 +132,14 @@ void Application::mainLoop() {
         int width = 0, height = 0;
         glfwGetWindowSize(m_Window, &width, &height);
         glViewport(0, 0, width, height);
-        m_Viewport->resize(width, height);
+        m_WindowInfo->resize(width, height);
+
+        // TODO: Camera System Integration
+        // 1. Update camera with window info
+        // m_Camera->update(0.001f);
 
         // Use ImGui layer to update and render
-        m_ImGuiLayer->OnUpdate(0.0f, m_Viewport.get());
+        m_ImGuiLayer->OnUpdate(0.0f, m_WindowInfo.get());
 
         // Simulation update and render
         m_Simulation.update(0.001f, m_BoidsParams);

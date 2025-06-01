@@ -22,7 +22,6 @@ add_subdirectory(${GTEST_DIR} ${CMAKE_BINARY_DIR}/googletest)
 
 add_subdirectory(${GLAD_DIR} glad)
 
-
 # Add ImGui source files
 set(IMGUI_DIR ${THIRDPARTY_DIR}/imgui)
 set(IMGUI_SOURCES
@@ -57,36 +56,55 @@ add_executable(${PROJECT_NAME}
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
-    src/viewport/Viewport.cpp
-    src/viewport/Viewport.h
+    src/Utils/WindowInfo.cpp
+    src/Utils/WindowInfo.h
+    src/Utils/Camera.cpp
+    src/Utils/Camera.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src  
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewport
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
 )
+
+add_library(boids_core STATIC
+    src/core/Boid.cpp
+    src/core/Boid.h
+    src/core/BoidManager.cpp
+    src/core/BoidManager.h
+    src/core/Simulation.cpp
+    src/core/Simulation.h
+)
+
+target_include_directories(boids_core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
+    ${GLFW_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
+)
+
+# Add link libraries for boids_core
+target_link_libraries(boids_core PUBLIC
+    glfw
+    glad
+    OpenGL::GL
+)
+
 find_package(OpenGL REQUIRED)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     glfw
     imgui
     glad  
     OpenGL::GL
+    boids_core
 )
 
-# Add test executable
-add_executable(${PROJECT_NAME}_tests
-    tests/main_test.cpp
-)
-
-target_link_libraries(${PROJECT_NAME}_tests PRIVATE
-    GTest::gtest
-    GTest::gtest_main
-)
-
-add_test(NAME ${PROJECT_NAME}_tests COMMAND ${PROJECT_NAME}_tests)
+add_subdirectory(tests)
 
 option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
 if(CLANG_TIDY_ENABLE)

@@ -48,9 +48,9 @@ class ImGuiLayer::Impl {
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void RenderWindows(const Viewport* viewport) {
-        int winWidth = viewport->getWidth();
-        int winHeight = viewport->getHeight();
+    void RenderWindows(const WindowInfo* windowInfo) {
+        int winWidth = windowInfo->getWidth();
+        int winHeight = windowInfo->getHeight();
 
         // TODO： will parameterize these data later
         float posXRatio = 0.05f, posYRatio = 0.05f;
@@ -114,9 +114,9 @@ void ImGuiLayer::OnDetach() {
     // Additional cleanup can be done here
 }
 
-void ImGuiLayer::OnUpdate(float deltaTime, const Viewport* viewport) {
+void ImGuiLayer::OnUpdate(float deltaTime, const WindowInfo* windowInfo) {
     pImpl->BeginFrame();
-    pImpl->RenderWindows(viewport);
+    pImpl->RenderWindows(windowInfo);
     pImpl->EndFrame();
 }
 
