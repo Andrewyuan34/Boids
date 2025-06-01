@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include "../viewport/Viewport.h"
+#include "../Utils/WindowInfo.h"
 
 // Forward declarations
 struct GLFWwindow;
@@ -28,7 +28,7 @@ public:
     // Lifecycle management
     void OnAttach();
     void OnDetach();
-    void OnUpdate(float deltaTime, const Viewport* viewport);
+    void OnUpdate(float deltaTime, const WindowInfo* windowInfo);
     void OnRender();
 
     // Window management

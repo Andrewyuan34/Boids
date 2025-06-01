@@ -56,8 +56,8 @@ add_executable(${PROJECT_NAME}
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
-    src/viewport/Viewport.cpp
-    src/viewport/Viewport.h
+    src/Utils/WindowInfo.cpp
+    src/Utils/WindowInfo.h
     src/Utils/Camera.cpp
     src/Utils/Camera.h
 )
