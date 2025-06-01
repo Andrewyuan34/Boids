@@ -58,12 +58,15 @@ add_executable(${PROJECT_NAME}
     src/core/Simulation.h
     src/viewport/Viewport.cpp
     src/viewport/Viewport.h
+    src/Utils/Camera.cpp
+    src/Utils/Camera.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src  
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewport
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
 )

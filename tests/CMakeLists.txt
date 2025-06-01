@@ -6,6 +6,7 @@ add_executable(${TEST_NAME}
     main_test.cpp
     BoidTest.cpp
     BoidManagerTest.cpp
+    CameraTest.cpp
 )
 
 # Set include directories
