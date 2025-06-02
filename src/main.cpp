@@ -6,8 +6,8 @@
 #include "ui/BoidsParams.h"
 #include "ui/ImGuiLayer.h"
 #define GL_SILENCE_DEPRECATION
-#include <GLFW/glfw3.h>
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include <memory>
 

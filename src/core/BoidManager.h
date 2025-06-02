@@ -2,6 +2,7 @@
 #ifndef GLM_ENABLE_EXPERIMENTAL
 #define GLM_ENABLE_EXPERIMENTAL
 #endif
+#include <memory>
 #include <vector>
 
 #include "Boid.h"
