@@ -20,6 +20,7 @@ shift
 goto :parse_args
 :end_parse_args
 
+
 :: Run clang-format if enabled
 if "%ENABLE_FORMAT%"=="ON" (
     echo Running clang-format on source files...
