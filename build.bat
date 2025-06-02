@@ -24,8 +24,10 @@ goto :parse_args
 :: Run clang-format if enabled
 if "%ENABLE_FORMAT%"=="ON" (
     echo Running clang-format on source files...
-    for /r ..\src %%f in (*.cpp *.h) do clang-format -i "%%f"
-    for /r ..\tests %%f in (*.cpp *.h) do clang-format -i "%%f"
+    for /r ..\src %%f in (*.cpp) do clang-format -i "%%f"
+    for /r ..\src %%f in (*.h) do clang-format -i "%%f"
+    for /r ..\tests %%f in (*.cpp) do clang-format -i "%%f"
+    for /r ..\tests %%f in (*.h) do clang-format -i "%%f"
 )
 
 :: If not using MSVC, check if clang is in PATH
