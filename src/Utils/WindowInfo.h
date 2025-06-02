@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 
 class WindowInfo {
-public:
+   public:
     WindowInfo() = default;
     ~WindowInfo() = default;
 
@@ -16,7 +16,7 @@ public:
     glm::vec2 screenToWorld(const glm::vec2& screenPos) const;
     glm::vec2 worldToScreen(const glm::vec2& worldPos) const;
 
-private:
+   private:
     int m_Width = 0;
     int m_Height = 0;
-}; 
+};

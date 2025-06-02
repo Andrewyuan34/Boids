@@ -1,13 +1,15 @@
 #include <gtest/gtest.h>
-#include "Utils/Camera.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Utils/Camera.h"
 
 namespace Boids {
 namespace Tests {
 
 class CameraTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {
         // Setup code that will be called before each test
     }
@@ -17,5 +19,5 @@ protected:
     }
 };
 
-} // namespace Tests
-} // namespace Boids 
+}  // namespace Tests
+}  // namespace Boids

@@ -1,13 +1,15 @@
 #include <gtest/gtest.h>
+
+#include <glm/gtx/norm.hpp>
+
 #include "core/BoidManager.h"
 #include "ui/BoidsParams.h"
-#include <glm/gtx/norm.hpp>
 
 namespace Boids {
 namespace Test {
 
 class BoidManagerTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {
         // Set default parameters
         params.boidCount = 3;  // Use fewer boids for easier testing
@@ -51,8 +53,10 @@ TEST_F(BoidManagerTest, Initialize) {
 
         // 2.3 Verify the boid state is valid
         EXPECT_TRUE(boid != nullptr);
-        EXPECT_TRUE(std::isfinite(pos.x) && std::isfinite(pos.y) && std::isfinite(pos.z));  // Check each component
-        EXPECT_TRUE(std::isfinite(vel.x) && std::isfinite(vel.y) && std::isfinite(vel.z));  // Check each component
+        EXPECT_TRUE(std::isfinite(pos.x) && std::isfinite(pos.y) &&
+                    std::isfinite(pos.z));  // Check each component
+        EXPECT_TRUE(std::isfinite(vel.x) && std::isfinite(vel.y) &&
+                    std::isfinite(vel.z));  // Check each component
     }
 
     // 3. Verify the initial distance between boids is reasonable (not too close)
@@ -80,7 +84,8 @@ TEST_F(BoidManagerTest, ComputeSeparation) {
     // Verify the force magnitude is within a reasonable range
     float forceMagnitude = glm::length(force);
     EXPECT_GT(forceMagnitude, 0.0f);  // The force should be greater than 0
-    EXPECT_LT(forceMagnitude, params.maxForce+0.05);  // The force should not exceed the maximum value + 5%
+    EXPECT_LT(forceMagnitude,
+              params.maxForce + 0.05);  // The force should not exceed the maximum value + 5%
 }
 
 // Test compute alignment
@@ -104,10 +109,13 @@ TEST_F(BoidManagerTest, ComputeBoundaryForce) {
     glm::vec3 pos(0.9f, 0.0f, 0.0f);  // Near upper boundary
     float buffer = 0.2f;
 
-    glm::vec3 force = manager.computeBoundaryForce(pos, params.boundaryMin, params.boundaryMax, buffer, params.boundaryForceMax);
+    glm::vec3 force = manager.computeBoundaryForce(pos, params.boundaryMin, params.boundaryMax,
+                                                   buffer, params.boundaryForceMax);
 
-    // Verify the force direction (should point towards the inside) and magnitude (proportional to the distance)
-    float expectedForce = -params.boundaryForceMax * 0.5f;  // The distance is half of the buffer, so the force is half
+    // Verify the force direction (should point towards the inside) and magnitude (proportional to
+    // the distance)
+    float expectedForce = -params.boundaryForceMax *
+                          0.5f;  // The distance is half of the buffer, so the force is half
     EXPECT_NEAR(force.x, expectedForce, params.boundaryForceMax * 0.1f);
     EXPECT_NEAR(force.y, 0.0f, params.boundaryForceMax * 0.1f);
     EXPECT_NEAR(force.z, 0.0f, params.boundaryForceMax * 0.1f);
@@ -128,5 +136,5 @@ TEST_F(BoidManagerTest, ComputeCohesion) {
     EXPECT_GT(force.x, 0.0f);
 }
 
-} // namespace Test
-} // namespace Boids 
+}  // namespace Test
+}  // namespace Boids

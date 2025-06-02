@@ -7,5 +7,5 @@ class Camera {
     // Implementation will be added later
 };
 
-} // namespace Utils
-} // namespace Boids 
+}  // namespace Utils
+}  // namespace Boids

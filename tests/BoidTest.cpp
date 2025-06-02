@@ -1,13 +1,15 @@
 #include <gtest/gtest.h>
+
+#include <glm/gtx/norm.hpp>
+
 #include "core/Boid.h"
 #include "ui/BoidsParams.h"
-#include <glm/gtx/norm.hpp>
 
 namespace Boids {
 namespace Test {
 
 class BoidTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {
         // Set default parameters
         params.boidCount = 50;
@@ -75,5 +77,5 @@ TEST_F(BoidTest, PositionUpdate) {
     EXPECT_NEAR(glm::length(boid.getPosition() - expectedPos), 0.0f, 0.0001f);
 }
 
-} // namespace Test
-} // namespace Boids 
+}  // namespace Test
+}  // namespace Boids

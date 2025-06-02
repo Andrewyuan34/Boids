@@ -1,12 +1,13 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "ui/BoidsParams.h"
 #include <glm/gtc/quaternion.hpp>
+
+#include "ui/BoidsParams.h"
 
 namespace Boids {
 
 class Boid {
-public:
+   public:
     Boid(const glm::vec3& position, const glm::vec3& velocity);
 
     glm::vec3 getPosition() const;
@@ -14,7 +15,7 @@ public:
 
     void setPosition(const glm::vec3& pos);
     void setVelocity(const glm::vec3& vel);
-    
+
     // apply force to boid
     void applyForce(const glm::vec3& force);
 
@@ -22,12 +23,13 @@ public:
     void update(float deltaTime, const BoidsParams& params);
 
     void render() const;
-private:
-    glm::vec3 m_Position;    
-    glm::vec3 m_Velocity;    
-    glm::vec3 m_Acceleration; 
+
+   private:
+    glm::vec3 m_Position;
+    glm::vec3 m_Velocity;
+    glm::vec3 m_Acceleration;
     glm::quat m_Rotation;
-    glm::vec3 m_Scale; 
+    glm::vec3 m_Scale;
 };
 
-} // namespace Boids
+}  // namespace Boids

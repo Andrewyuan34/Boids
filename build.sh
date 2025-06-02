@@ -16,6 +16,7 @@ set -e
 BUILD_TYPE=Release
 RUN_TESTS=OFF
 ENABLE_TIDY=OFF
+ENABLE_FORMAT=OFF
 
 # Parse command line arguments
 while [[ $# -gt 0 ]]; do
@@ -30,6 +31,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --tidy)
             ENABLE_TIDY=ON
+            shift
+            ;;
+         --format)
+            ENABLE_FORMAT=ON
             shift
             ;;
         *)
@@ -65,6 +70,11 @@ fi
 
 # Build the project
 cmake --build .
+
+# Run clang-format if request
+if [ "$ENABLE_FORMAT" = "ON" ]; then
+    find src tests -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
+fi 
 
 # Run tests if requested
 if [ "$RUN_TESTS" = "ON" ]; then

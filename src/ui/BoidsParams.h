@@ -21,8 +21,8 @@ struct BoidsParams {
     float alignmentRadius = 25.0f;
     float cohesionRadius = 25.0f;
 
-	// Boundary parameters
-	float boundaryMin = -1.0f;
-	float boundaryMax = 1.0f;
-	float boundaryForceMax = 0.1f;
+    // Boundary parameters
+    float boundaryMin = -1.0f;
+    float boundaryMax = 1.0f;
+    float boundaryForceMax = 0.1f;
 };
