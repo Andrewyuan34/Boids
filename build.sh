@@ -44,11 +44,18 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+
 # Check if clang is available in PATH
 if ! command -v clang >/dev/null 2>&1; then
     echo "clang not found in PATH!"
     exit 1
 fi
+
+# Run clang-format if request
+if [ "$ENABLE_FORMAT" = "ON" ]; then
+    find src tests -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
+fi 
+
 
 # Create build directory if it doesn't exist
 mkdir -p build
@@ -71,10 +78,6 @@ fi
 # Build the project
 cmake --build .
 
-# Run clang-format if request
-if [ "$ENABLE_FORMAT" = "ON" ]; then
-    find src tests -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
-fi 
 
 # Run tests if requested
 if [ "$RUN_TESTS" = "ON" ]; then
