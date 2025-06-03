@@ -52,7 +52,7 @@ fi
 
 # Run clang-format if requested
 if [ "$ENABLE_FORMAT" = "ON" ]; then
-    find src tests -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
+    find src tests \( -name '*.cpp' -o -name '*.h' \) | xargs clang-format -i -style=file
 fi
 
 
