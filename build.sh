@@ -44,10 +44,16 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Run clang-format if request
+# Check if clang-format is available in PATH
+if ! command -v clang-format >/dev/null 2>&1; then
+    echo "clang-format not found in PATH!"
+    exit 1
+fi
+
+# Run clang-format if requested
 if [ "$ENABLE_FORMAT" = "ON" ]; then
     find src tests -name '*.cpp' -o -name '*.h' | xargs clang-format -i -style=file
-fi 
+fi
 
 
 # Check if clang is available in PATH
