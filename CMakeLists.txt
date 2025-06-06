@@ -60,6 +60,8 @@ add_executable(${PROJECT_NAME}
     src/Utils/WindowInfo.h
     src/Utils/Camera.cpp
     src/Utils/Camera.h
+    src/Utils/Log.cpp
+    src/Utils/Log.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -69,6 +71,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
+    ${SPDLOG_DIR}/include
 )
 
 add_library(boids_core STATIC
@@ -92,6 +95,7 @@ target_link_libraries(boids_core PUBLIC
     glfw
     glad
     OpenGL::GL
+    spdlog::spdlog
 )
 
 find_package(OpenGL REQUIRED)
@@ -102,7 +106,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glad  
     OpenGL::GL
     boids_core
+    spdlog::spdlog
 )
+
+# Add spdlog
+set(SPDLOG_DIR ${THIRDPARTY_DIR}/spdlog)
+add_subdirectory(${SPDLOG_DIR} ${CMAKE_BINARY_DIR}/spdlog)
 
 add_subdirectory(tests)
 

@@ -13,6 +13,7 @@
 
 #include "Utils/WindowInfo.h"
 #include "core/Simulation.h"
+#include "Utils/Log.h"
 
 class Application {
    private:
@@ -157,4 +158,8 @@ void Application::cleanup() {
     glfwTerminate();
 }
 
-int main(int, char**) { return Application::get().run(); }
+int main(int, char**) {
+    Log::Init();
+    LOG_INFO("Logger initialized");
+    return Application::get().run();
+}
