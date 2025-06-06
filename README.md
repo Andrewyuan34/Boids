@@ -60,6 +60,7 @@ build.bat --msvc
 ### Script Options
 - `--debug`
 - `--tidy`
+- `--format`
 ---
 
 For contribution guidelines, see [CONTRIBUTION.md](CONTRIBUTION.md).
