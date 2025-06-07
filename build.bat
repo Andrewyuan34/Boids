@@ -20,6 +20,8 @@ shift
 goto :parse_args
 :end_parse_args
 
+echo Updating git submodules...
+git submodule update --init --recursive
 
 :: Run clang-format if enabled
 if "%ENABLE_FORMAT%"=="ON" (
