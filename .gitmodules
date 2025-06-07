@@ -13,3 +13,6 @@
 [submodule "thirdparty/spdlog"]
 	path = thirdparty/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "thirdparty/ozz-animation"]
+	path = thirdparty/ozz-animation
+	url = https://github.com/guillaumeblanc/ozz-animation.git
