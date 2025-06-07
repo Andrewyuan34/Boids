@@ -32,6 +32,9 @@ Focus: Improve performance, modularity, and dev comfort without overengineering.
 
 Focus: Final optimizations, visual quality, and debugging polish.
 
+## Requirement
+- MSVC: Visual Studio 2022 has to be 17.5 or above
+
 
 ## Usage
 

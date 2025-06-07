@@ -20,8 +20,16 @@ shift
 goto :parse_args
 :end_parse_args
 
+:: Make sure submodules are updated
 echo Updating git submodules...
 git submodule update --init --recursive
+
+:: Build bgfx.cmake
+call scripts\build_bgfx.bat %USE_MSVC%
+if errorlevel 1 (
+    echo Failed to build bgfx.cmake
+    exit /b 1
+)
 
 :: Run clang-format if enabled
 if "%ENABLE_FORMAT%"=="ON" (
