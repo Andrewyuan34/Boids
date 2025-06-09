@@ -17,8 +17,36 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 set(GLAD_DIR ${THIRDPARTY_DIR}/glad)
 
-set(GTEST_DIR ${THIRDPARTY_DIR}/googletest)
-add_subdirectory(${GTEST_DIR} ${CMAKE_BINARY_DIR}/googletest)
+# Add GLFW first (to be used by both main project and Ozz)
+set(GLFW_DIR ${THIRDPARTY_DIR}/glfw)
+add_subdirectory(${GLFW_DIR} ${CMAKE_BINARY_DIR}/glfw)
+
+# Add Ozz Animation
+set(OZZ_DIR ${THIRDPARTY_DIR}/ozz-animation)
+
+if(WIN32)
+    if(MSVC)
+        set(ozz_build_msvc_rt_dll ON CACHE BOOL "Use MSVC runtime DLL" FORCE)
+        add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
+    elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        # For Clang on Windows
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS -Wno-deprecated-declarations")
+    endif()
+endif()
+set(ozz_build_tools OFF CACHE BOOL "Disable Ozz tools" FORCE)
+set(ozz_build_samples OFF CACHE BOOL "Disable Ozz samples" FORCE)
+set(ozz_build_howtos OFF CACHE BOOL "Disable Ozz howtos" FORCE)
+set(ozz_build_tests OFF CACHE BOOL "Disable Ozz tests" FORCE)
+set(ozz_build_fbx OFF CACHE BOOL "Disable FBX support" FORCE)
+set(ozz_build_gltf OFF CACHE BOOL "Disable glTF support" FORCE)
+add_subdirectory(${OZZ_DIR} ${CMAKE_BINARY_DIR}/ozz-animation)
+
+# Add GoogleTest (only if not already added by Ozz)
+if(NOT TARGET gtest)
+    set(GTEST_DIR ${THIRDPARTY_DIR}/googletest)
+    add_subdirectory(${GTEST_DIR} ${CMAKE_BINARY_DIR}/googletest)
+endif()
 
 add_subdirectory(${GLAD_DIR} glad)
 
@@ -33,10 +61,6 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
-
-# Add GLFW
-set(GLFW_DIR ${THIRDPARTY_DIR}/glfw)
-add_subdirectory(${GLFW_DIR} ${CMAKE_BINARY_DIR}/glfw)
 
 add_library(imgui STATIC ${IMGUI_SOURCES})
 target_include_directories(imgui PUBLIC
@@ -114,6 +138,9 @@ set(SPDLOG_DIR ${THIRDPARTY_DIR}/spdlog)
 add_subdirectory(${SPDLOG_DIR} ${CMAKE_BINARY_DIR}/spdlog)
 
 add_subdirectory(tests)
+
+# Add demos
+add_subdirectory(demos/ozz_animation)
 
 option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
 if(CLANG_TIDY_ENABLE)
