@@ -16,6 +16,34 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # Add third party library path
 set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 set(GLAD_DIR ${THIRDPARTY_DIR}/glad)
+set(BGFX_CMAKE_DIR ${THIRDPARTY_DIR}/bgfx.cmake)
+
+# Disable specific warnings for bgfx
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS")
+    add_compile_options(/wd4805)  # No warning for '?:' operator
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS -Wno-deprecated-declarations")
+endif()
+
+# Add bgfx.cmake
+add_subdirectory(${BGFX_CMAKE_DIR} ${CMAKE_BINARY_DIR}/bgfx)
+
+# Function to setup bgfx for a target
+function(setup_bgfx_target TARGET_NAME)
+    target_link_libraries(${TARGET_NAME} PRIVATE
+        bgfx
+        bx
+        bimg
+    )
+    
+    target_include_directories(${TARGET_NAME} PRIVATE
+        ${BGFX_CMAKE_DIR}/bgfx/include
+        ${BGFX_CMAKE_DIR}/bx/include
+        ${BGFX_CMAKE_DIR}/bimg/include
+    )
+endfunction()
 
 # Add GLFW first (to be used by both main project and Ozz)
 set(GLFW_DIR ${THIRDPARTY_DIR}/glfw)
@@ -141,6 +169,7 @@ add_subdirectory(tests)
 
 # Add demos
 add_subdirectory(demos/ozz_animation)
+add_subdirectory(demos/bgfx)
 
 option(CLANG_TIDY_ENABLE "Enable clang-tidy" OFF)
 if(CLANG_TIDY_ENABLE)
