@@ -8,3 +8,5 @@ Cursor_Reminder
 
 build-msvc/
 build-clang/
+
+thirdparty/bgfx.cmake/build/
