@@ -99,9 +99,7 @@ bool Application::init() {
     int width = 0, height = 0;
     glfwGetWindowSize(m_Window, &width, &height);
     float aspect = (height == 0) ? 1.0f : static_cast<float>(width) / height;
-    m_Camera = std::make_unique<Boids::Utils::Camera>(
-        45.0f, aspect, 0.1f, 100.0f
-    );
+    m_Camera = std::make_unique<Boids::Utils::Camera>(45.0f, aspect, 0.1f, 100.0f);
 
     // TODO: Make sure the widget is adjusted to the window size
     m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
