@@ -44,7 +44,8 @@ jobs:
           submodules: recursive
       - name: Install dependencies
         run: |
-          choco install ninja cmake llvm -y
+          choco install ninja cmake -y
+          choco install llvm --version=19.1.0 -y
           # Optionally, add LLVM to PATH if not already
           set "PATH=C:\Program Files\LLVM\bin;%PATH%"
       - name: Build
