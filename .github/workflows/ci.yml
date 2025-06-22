@@ -44,10 +44,21 @@ jobs:
           submodules: recursive
       - name: Install dependencies
         run: |
+          echo "Installing Ninja and CMake..."
           choco install ninja cmake -y
-          choco install llvm --version=19.1.0 -y
-          # Optionally, add LLVM to PATH if not already
-          set "PATH=C:\Program Files\LLVM\bin;%PATH%"
+
+          echo "FORCE installing LLVM v19.1.0 to overwrite cached version..."
+          # Use --force to ensure the correct version is installed over the pre-existing one.
+          choco install llvm --version=19.1.0 --force -y
+
+          echo "Adding LLVM to GITHUB_PATH..."
+          echo "C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          
+          echo "--- VERIFICATION STEP ---"
+          echo "Verifying clang version from the updated PATH:"
+          # This should now correctly report version 19.1.0
+          clang --version
+          echo "-------------------------"
       - name: Build
         shell: cmd
         run: |
