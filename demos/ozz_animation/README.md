@@ -6,6 +6,6 @@ Follow the first two sections on [this page](https://guillaumeblanc.github.io/oz
 
 The application source-code for each sample is found in `samples/`. In each folder you will find a `CMakeLists.txt` file that contains the options for building the samples. The dependencies for building the project are listed at the top. Here is what it looks like for the `playback` sample.
 <img src="images/playback_makefile_original.png" />
-`pab_skeleton.ozz` and `pab_crossarms.ozz` are archive skeleton and animation files respectively used in this sample. You can replace `pab_crossarms.oz` with `pab_run.ozz` in the `DEPENDS` and `copy` commands and rebuild the project. Now, if you run `build/samples/playback/sample_playback` you will see the run animation being applied to the skeleton instead of the original arms crossing one.
+`pab_skeleton.ozz` and `pab_crossarms.ozz` are archive skeleton and animation files respectively used in this sample. You can replace `pab_crossarms.ozz` with `pab_run.ozz` in the `DEPENDS` and `copy` commands and rebuild the project. Now, if you run `build/samples/playback/sample_playback` you will see the run animation being applied to the skeleton instead of the original arms crossing one.
 
 The `.cc` files contain the application code. Here you will typically find the loading of the skeleton and animation from their archive files, as well the update and display functions, amongst others.
