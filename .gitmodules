@@ -16,3 +16,6 @@
 [submodule "thirdparty/ozz-animation"]
 	path = thirdparty/ozz-animation
 	url = https://github.com/guillaumeblanc/ozz-animation.git
+[submodule "thirdparty/bgfx.cmake"]
+	path = thirdparty/bgfx.cmake
+	url = https://github.com/bkaradzic/bgfx.cmake.git

@@ -23,15 +23,6 @@ goto :parse_args
 echo Updating git submodules...
 git submodule update --init --recursive
 
-:: Run clang-format if enabled
-if "%ENABLE_FORMAT%"=="ON" (
-    echo Running clang-format on source files...
-    for /r ..\src %%f in (*.cpp) do clang-format -i "%%f"
-    for /r ..\src %%f in (*.h) do clang-format -i "%%f"
-    for /r ..\tests %%f in (*.cpp) do clang-format -i "%%f"
-    for /r ..\tests %%f in (*.h) do clang-format -i "%%f"
-)
-
 :: If not using MSVC, check if clang is in PATH
 if "%USE_MSVC%"=="OFF" (
     where clang >nul 2>nul
@@ -40,6 +31,43 @@ if "%USE_MSVC%"=="OFF" (
         exit /b 1
     )
 )
+
+:: Initialize bgfx.cmake if build directory doesn't exist
+if not exist "thirdparty\bgfx.cmake" (
+    echo Error: bgfx.cmake directory not found!
+    exit /b 1
+)
+
+if not exist "thirdparty\bgfx.cmake\build" (
+    echo Initializing bgfx.cmake...
+    pushd thirdparty\bgfx.cmake
+    git submodule init
+    git submodule update
+
+    if "%USE_MSVC%"=="ON" (
+        :: Use default MSVC compiler
+        cmake -S. -B build
+    ) else (
+        :: Use Clang compiler
+        cmake -S. -B build -G "Ninja" ^
+            -DCMAKE_C_COMPILER=clang ^
+            -DCMAKE_CXX_COMPILER=clang++
+    )
+    
+    cmake --build build
+    popd
+)
+
+:: Run clang-format if enabled
+if "%ENABLE_FORMAT%"=="ON" (
+    echo Running clang-format on source files...
+    for /r src %%f in (*.cpp) do clang-format -i "%%f"
+    for /r src %%f in (*.h) do clang-format -i "%%f"
+    for /r tests %%f in (*.cpp) do clang-format -i "%%f"
+    for /r tests %%f in (*.h) do clang-format -i "%%f"
+)
+
+
 
 :: Set build directory based on compiler
 if "%USE_MSVC%"=="ON" (
