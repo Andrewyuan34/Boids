@@ -34,7 +34,8 @@ jobs:
           sudo apt-get install -y ninja-build clang cmake libglfw3-dev libglm-dev libx11-dev libxrandr-dev libxi-dev libxxf86vm-dev libxcursor-dev libxinerama-dev libwayland-dev wayland-protocols libxkbcommon-dev
       - name: Build
         run: |
-          ./build.sh --tidy --test --debug
+          ./build.sh --tidy --test --debug # debug mode
+          ./build.sh --tidy --test # release mode
 
   build-windows-clang:
     runs-on: windows-latest
@@ -62,4 +63,37 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          build.bat --tidy --test --debug
+          build.bat --tidy --test --debug # debug mode
+          build.bat --tidy --test # release mode
+
+  build-windows-msvc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Set up MSVC Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Install dependencies
+        run: |
+          choco install ninja cmake -y
+      - name: Build with MSVC
+        shell: cmd
+        run: |
+          build.bat --tidy --test --debug --msvc # debug mode
+          build.bat --tidy --test --msvc # release mode
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install dependencies
+        run: |
+          brew update
+          brew install ninja cmake glfw glm
+      - name: Build
+        run: |
+          ./build.sh --tidy --test --debug # debug mode
+          ./build.sh --tidy --test # release mode
