@@ -48,14 +48,14 @@ done
 echo "Updating git submodules..."
 git submodule update --init --recursive
 
-# Check if clang-format is available in PATH
-if ! command -v clang-format >/dev/null 2>&1; then
-    echo "clang-format not found in PATH!"
-    exit 1
-fi
 
 # Run clang-format if requested
 if [ "$ENABLE_FORMAT" = "ON" ]; then
+    # Check if clang-format is available in PATH
+    if ! command -v clang-format >/dev/null 2>&1; then
+        echo "clang-format not found in PATH!"
+        exit 1
+    fi
     find src tests \( -name '*.cpp' -o -name '*.h' \) | xargs clang-format -i -style=file
 fi
 
