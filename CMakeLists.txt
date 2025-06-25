@@ -102,6 +102,7 @@ add_executable(${PROJECT_NAME}
     src/ui/ImGuiLayer.cpp
     src/ui/ImGuiLayer.h
     src/ui/BoidsParams.h
+    src/core/Entity.h
     src/core/Boid.cpp
     src/core/Boid.h
     src/core/BoidManager.cpp
@@ -127,6 +128,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 add_library(boids_core STATIC
+    src/core/Entity.h
     src/core/Boid.cpp
     src/core/Boid.h
     src/core/BoidManager.cpp

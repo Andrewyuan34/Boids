@@ -2,7 +2,8 @@
 #include "BoidManager.h"
 #include "ui/BoidsParams.h"
 
-namespace Boids {
+// To be extended to handle more entities later
+namespace Boids {  // to be removed
 
 class Simulation {
    public:

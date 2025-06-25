@@ -8,6 +8,7 @@
 #include "Boid.h"
 #include "ui/BoidsParams.h"
 
+// To be removed to other folder later
 namespace Boids {
 
 class BoidManager {

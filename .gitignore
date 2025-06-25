@@ -1,12 +1,49 @@
 // Write a .gitignore file for the project
 
-# Ignore all files in the build directory
+# Build directories
 build/
-
-# Ignore all files in the bin directory
-Cursor_Reminder
-
 build-msvc/
 build-clang/
+bin/
+lib/
 
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Third party build artifacts
 thirdparty/bgfx.cmake/build/
+thirdparty/ozz-animation/build/
+thirdparty/glfw/build/
+thirdparty/googletest/build/
+thirdparty/spdlog/build/
+thirdparty/imgui/build/
+
+# Submodule modifications (ignore any local changes to submodules)
+thirdparty/*/CMakeCache.txt
+thirdparty/*/CMakeFiles/
+thirdparty/*/cmake_install.cmake
+thirdparty/*/Makefile
+thirdparty/*/*.so
+thirdparty/*/*.dylib
+thirdparty/*/*.dll
+thirdparty/*/*.exe
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
