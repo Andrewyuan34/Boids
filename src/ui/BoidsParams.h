@@ -25,4 +25,15 @@ struct BoidsParams {
     float boundaryMin = -1.0f;
     float boundaryMax = 1.0f;
     float boundaryForceMax = 0.1f;
+
+    // Static access method
+    static BoidsParams& get() {
+        static BoidsParams instance;
+        return instance;
+    }
+
+    static const BoidsParams& getConst() { return get(); }
+
+    // Reset to default values
+    static void reset() { get() = BoidsParams{}; }
 };

@@ -10,14 +10,18 @@ class Simulation {
     Simulation();
     ~Simulation();
 
-    void initialize(const BoidsParams& params);
-    void update(float deltaTime, const BoidsParams& params);
+    void initialize();
+    void update(float deltaTime);
     void render() const;
 
     BoidManager& getBoidManager();
 
+    const BoidsParams& getParams() const { return m_Params; }
+    void setParams(const BoidsParams& params) { m_Params = params; }
+
    private:
     BoidManager m_BoidManager;
+    BoidsParams m_Params;
 };
 
 }  // namespace Boids

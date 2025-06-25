@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -22,10 +22,8 @@ class Application {
     GLFWwindow* m_Window = nullptr;
     bool m_Running = true;
     std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
-    BoidsParams m_BoidsParams;
     Boids::Simulation m_Simulation;
     std::unique_ptr<WindowInfo> m_WindowInfo = std::make_unique<WindowInfo>();
-
     std::unique_ptr<Boids::Utils::Camera> m_Camera;
 
     Application() = default;
@@ -46,8 +44,10 @@ class Application {
         return *s_Instance;
     }
 
-    int run() {
-        if (!init()) return 1;
+    auto run() -> int {
+        if (!init()) {
+            return 1;
+        }
         mainLoop();
         cleanup();
         return 0;
@@ -61,7 +61,8 @@ static void glfw_error_callback(int error, const char* description) {
 }
 
 bool Application::init() {
-    m_Simulation.initialize(m_BoidsParams);
+    m_Simulation.initialize();
+
     // Initialize GLFW
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return false;
@@ -103,19 +104,21 @@ bool Application::init() {
 
     // TODO: Make sure the widget is adjusted to the window size
     m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
+        auto& params = BoidsParams::get();
+
         if (ImGui::CollapsingHeader("Global Simulation Parameters",
                                     ImGuiTreeNodeFlags_DefaultOpen)) {
-            ImGui::SliderInt("Boid Count", &m_BoidsParams.boidCount, 10, 1000);
-            ImGui::SliderFloat("Simulation Speed", &m_BoidsParams.simulationSpeed, 0.1f, 5.0f);
+            ImGui::SliderInt("Boid Count", &params.boidCount, 10, 1000);
+            ImGui::SliderFloat("Simulation Speed", &params.simulationSpeed, 0.1f, 5.0f);
         }
         if (ImGui::CollapsingHeader("Movement Parameters", ImGuiTreeNodeFlags_DefaultOpen)) {
-            ImGui::SliderFloat("Max Speed", &m_BoidsParams.maxSpeed, 0.1f, 10.0f);
-            ImGui::SliderFloat("Max Force", &m_BoidsParams.maxForce, 0.01f, 1.0f);
+            ImGui::SliderFloat("Max Speed", &params.maxSpeed, 0.1f, 10.0f);
+            ImGui::SliderFloat("Max Force", &params.maxForce, 0.01f, 1.0f);
         }
         if (ImGui::CollapsingHeader("Behavior weights", ImGuiTreeNodeFlags_DefaultOpen)) {
-            ImGui::SliderFloat("Alignment Weight", &m_BoidsParams.alignmentWeight, 0.0f, 5.0f);
-            ImGui::SliderFloat("Separation Weight", &m_BoidsParams.separationWeight, 0.0f, 5.0f);
-            ImGui::SliderFloat("Cohesion Weight", &m_BoidsParams.cohesionWeight, 0.0f, 5.0f);
+            ImGui::SliderFloat("Alignment Weight", &params.alignmentWeight, 0.0f, 5.0f);
+            ImGui::SliderFloat("Separation Weight", &params.separationWeight, 0.0f, 5.0f);
+            ImGui::SliderFloat("Cohesion Weight", &params.cohesionWeight, 0.0f, 5.0f);
         }
     });
 
@@ -142,8 +145,10 @@ void Application::mainLoop() {
         // Use ImGui layer to update and render
         m_ImGuiLayer->OnUpdate(0.0f, m_WindowInfo.get());
 
-        // Simulation update and render
-        m_Simulation.update(0.001f, m_BoidsParams);
+        // Update simulation
+        m_Simulation.update(0.001f);
+
+        // Render simulation
         m_Simulation.render();
 
         glfwSwapBuffers(m_Window);
