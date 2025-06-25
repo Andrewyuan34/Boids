@@ -12,12 +12,11 @@ class BoidTest : public ::testing::Test {
    protected:
     void SetUp() override {
         // Set default parameters
+        auto& params = BoidsParams::get();
         params.boidCount = 50;
         params.maxSpeed = 0.5f;
         params.maxForce = 0.03f;
     }
-
-    BoidsParams params;
 };
 
 // Test constructor and properties
@@ -42,7 +41,7 @@ TEST_F(BoidTest, ApplyForce) {
 
     glm::vec3 force(0.1f, 0.2f, 0.3f);
     boid.applyForce(force);
-    boid.update(1.0f, params);
+    boid.update(1.0f, BoidsParams::get());
 
     // The velocity should equal the force (since initial velocity is 0)
     EXPECT_NEAR(glm::length(boid.getVelocity()), glm::length(force), 0.0001f);
@@ -54,6 +53,7 @@ TEST_F(BoidTest, MaxSpeedLimit) {
     glm::vec3 vel(0.0f);
     Boid boid(pos, vel);
 
+    const auto& params = BoidsParams::get();
     // Apply a force that exceeds the maximum speed
     glm::vec3 force(params.maxSpeed * 2.0f, 0.0f, 0.0f);
     boid.applyForce(force);
@@ -70,7 +70,7 @@ TEST_F(BoidTest, PositionUpdate) {
     Boid boid(pos, vel);
 
     float deltaTime = 1.0f;
-    boid.update(deltaTime, params);
+    boid.update(deltaTime, BoidsParams::get());
 
     // The new position should be the initial position plus the velocity times the time
     glm::vec3 expectedPos = pos + vel * deltaTime;

@@ -5,11 +5,9 @@ namespace Boids {
 Simulation::Simulation() = default;
 Simulation::~Simulation() = default;
 
-void Simulation::initialize(const BoidsParams& params) { m_BoidManager.initialize(params); }
+void Simulation::initialize() { m_BoidManager.initialize(BoidsParams::get()); }
 
-void Simulation::update(float deltaTime, const BoidsParams& params) {
-    m_BoidManager.update(deltaTime, params);
-}
+void Simulation::update(float deltaTime) { m_BoidManager.update(deltaTime, BoidsParams::get()); }
 
 void Simulation::render() const { m_BoidManager.render(); }
 
