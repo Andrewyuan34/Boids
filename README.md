@@ -7,7 +7,8 @@
 ### Features
 ✅ Implement Viewport/WindowInfo class  
 ✅ Add boundary force steering  
-⬜ 2D -> 3D  
+✅ 2D -> 3D  
+✅ Integrate bgfx & ozz 
 ⬜ Enhance flock animation  
 ⬜ Dynamic skybox implementation  
 ⬜ Integrate clang-format in pre-commit hook and CI workflow
