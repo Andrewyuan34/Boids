@@ -47,3 +47,6 @@ thirdparty/*/*.exe
 # Temporary files
 *.tmp
 *.temp
+
+# clangd cache & misc
+.cache
