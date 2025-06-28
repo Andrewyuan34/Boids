@@ -135,6 +135,7 @@ add_library(boids_core STATIC
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
+    src/core/AnimationSystem.h
 )
 
 target_include_directories(boids_core PUBLIC
