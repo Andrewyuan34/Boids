@@ -1,3 +1,4 @@
 Checks:          'modernize-*,performance-*,bugprone-*,readability-*,clang-analyzer-*,cppcoreguidelines-*,misc-*,google-*'
 WarningsAsErrors: ''
 HeaderFilterRegex: 'src/.*'
+fileExcludePaths: 'thirdparty/.*'

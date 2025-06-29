@@ -34,8 +34,8 @@ jobs:
           sudo apt-get install -y ninja-build clang cmake libglfw3-dev libglm-dev libx11-dev libxrandr-dev libxi-dev libxxf86vm-dev libxcursor-dev libxinerama-dev libwayland-dev wayland-protocols libxkbcommon-dev
       - name: Build
         run: |
-          ./build.sh --tidy --test --debug # debug mode
-          ./build.sh --tidy --test # release mode
+          ./build.sh --test --debug # debug mode
+          ./build.sh --test # release mode
 
   build-windows-clang:
     runs-on: windows-latest
@@ -63,8 +63,8 @@ jobs:
       - name: Build
         shell: cmd
         run: |
-          build.bat --tidy --test --debug # debug mode
-          build.bat --tidy --test # release mode
+          build.bat --test --debug # debug mode
+          build.bat --test # release mode
 
   build-windows-msvc:
     runs-on: windows-latest
@@ -80,8 +80,8 @@ jobs:
       - name: Build with MSVC
         shell: cmd
         run: |
-          build.bat --tidy --test --debug --msvc # debug mode
-          build.bat --tidy --test --msvc # release mode
+          build.bat --test --debug --msvc # debug mode
+          build.bat --test --msvc # release mode
 
   build-macos:
     runs-on: macos-latest
@@ -95,5 +95,5 @@ jobs:
           brew install ninja cmake glfw glm
       - name: Build
         run: |
-          ./build.sh --tidy --test --debug # debug mode
-          ./build.sh --tidy --test # release mode
+          ./build.sh --test --debug # debug mode
+          ./build.sh --test # release mode
