@@ -1,8 +1,6 @@
 #include <cstdio>
 
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "ui/BoidsParams.h"
 #include "ui/ImGuiLayer.h"
 #define GL_SILENCE_DEPRECATION
@@ -11,10 +9,10 @@
 
 #include <memory>
 
-#include "Utils/WindowInfo.h"
+#include "utils/WindowInfo.h"
 #include "core/Simulation.h"
-#include "Utils/Log.h"
-#include "Utils/Camera.h"
+#include "utils/Log.h"
+#include "utils/Camera.h"
 
 class Application {
    private:
@@ -119,6 +117,19 @@ bool Application::init() {
             ImGui::SliderFloat("Alignment Weight", &params.alignmentWeight, 0.0f, 5.0f);
             ImGui::SliderFloat("Separation Weight", &params.separationWeight, 0.0f, 5.0f);
             ImGui::SliderFloat("Cohesion Weight", &params.cohesionWeight, 0.0f, 5.0f);
+        }
+
+        auto& pipeline = m_Simulation.getRenderPipeline();
+        auto& options = pipeline.GetOptions();
+
+        if (ImGui::CollapsingHeader("Render Modes", ImGuiTreeNodeFlags_DefaultOpen)) {
+            ImGui::Checkbox("Show Triangles", &options.triangles);
+            ImGui::Checkbox("Show Texture", &options.texture);
+            ImGui::Checkbox("Show Vertices", &options.vertices);
+
+            if (ImGui::Button("Reset to Default")) {
+                options.Reset();
+            }
         }
     });
 

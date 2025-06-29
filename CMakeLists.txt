@@ -109,22 +109,25 @@ add_executable(${PROJECT_NAME}
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
-    src/Utils/WindowInfo.cpp
-    src/Utils/WindowInfo.h
-    src/Utils/Camera.cpp
-    src/Utils/Camera.h
-    src/Utils/Log.cpp
-    src/Utils/Log.h
+    src/utils/WindowInfo.cpp
+    src/utils/WindowInfo.h
+    src/utils/Camera.cpp
+    src/utils/Camera.h
+    src/utils/Log.cpp
+    src/utils/Log.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src  
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewport
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
     ${SPDLOG_DIR}/include
+    ${BGFX_CMAKE_DIR}/bgfx/include
+    ${BGFX_CMAKE_DIR}/bx/include
+    ${BGFX_CMAKE_DIR}/bimg/include
 )
 
 add_library(boids_core STATIC
@@ -135,6 +138,14 @@ add_library(boids_core STATIC
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
+    src/rendering/Pipeline.cpp
+    src/rendering/Pipeline.h
+    src/rendering/PipelineStage.cpp
+    src/rendering/PipelineStage.h
+    src/rendering/stages/InitializeStage.cpp
+    src/rendering/stages/InitializeStage.h
+    src/rendering/stages/DrawBoidsStage.cpp
+    src/rendering/stages/DrawBoidsStage.h
 )
 
 target_include_directories(boids_core PUBLIC
@@ -142,6 +153,9 @@ target_include_directories(boids_core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${GLFW_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
+    ${BGFX_CMAKE_DIR}/bgfx/include
+    ${BGFX_CMAKE_DIR}/bx/include
+    ${BGFX_CMAKE_DIR}/bimg/include
 )
 
 # Add link libraries for boids_core
@@ -150,6 +164,9 @@ target_link_libraries(boids_core PUBLIC
     glad
     OpenGL::GL
     spdlog::spdlog
+    bgfx
+    bx
+    bimg
 )
 
 find_package(OpenGL REQUIRED)
@@ -161,6 +178,9 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     OpenGL::GL
     boids_core
     spdlog::spdlog
+    bgfx
+    bx
+    bimg
 )
 
 # Add spdlog

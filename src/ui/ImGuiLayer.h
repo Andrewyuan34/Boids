@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "../Utils/WindowInfo.h"
+#include "../utils/WindowInfo.h"
 
 // Forward declarations
 struct GLFWwindow;
