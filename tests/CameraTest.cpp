@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Utils/Camera.h"
+#include "utils/Camera.h"
 
 namespace Boids {
 namespace Tests {

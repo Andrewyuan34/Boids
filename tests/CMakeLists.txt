@@ -13,7 +13,7 @@ add_executable(${TEST_NAME}
 # Set include directories
 target_include_directories(${TEST_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/rendering
+    ${CMAKE_SOURCE_DIR}/src/rendering
     ${CMAKE_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_SOURCE_DIR}/thirdparty/googletest/googletest/include
     ${CMAKE_SOURCE_DIR}/thirdparty/bgfx.cmake/bgfx/include

@@ -1,8 +1,6 @@
 #include <cstdio>
 
 #include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "ui/BoidsParams.h"
 #include "ui/ImGuiLayer.h"
 #define GL_SILENCE_DEPRECATION

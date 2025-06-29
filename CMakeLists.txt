@@ -109,27 +109,19 @@ add_executable(${PROJECT_NAME}
     src/core/BoidManager.h
     src/core/Simulation.cpp
     src/core/Simulation.h
-    src/Utils/WindowInfo.cpp
-    src/Utils/WindowInfo.h
-    src/Utils/Camera.cpp
-    src/Utils/Camera.h
-    src/Utils/Log.cpp
-    src/Utils/Log.h
-    src/rendering/Pipeline.cpp
-    src/rendering/Pipeline.h
-    src/rendering/PipelineStage.cpp
-    src/rendering/PipelineStage.h
-    src/rendering/stages/InitializeStage.cpp
-    src/rendering/stages/InitializeStage.h
-    src/rendering/stages/DrawBoidsStage.cpp
-    src/rendering/stages/DrawBoidsStage.h
+    src/utils/WindowInfo.cpp
+    src/utils/WindowInfo.h
+    src/utils/Camera.cpp
+    src/utils/Camera.h
+    src/utils/Log.cpp
+    src/utils/Log.h
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src  
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/viewport
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Utils
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glm
     ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include
     ${SPDLOG_DIR}/include
