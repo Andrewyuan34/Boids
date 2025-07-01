@@ -128,6 +128,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${BGFX_CMAKE_DIR}/bgfx/include
     ${BGFX_CMAKE_DIR}/bx/include
     ${BGFX_CMAKE_DIR}/bimg/include
+    ${CMAKE_BINARY_DIR}/include/generated/shaders
 )
 
 add_library(boids_core STATIC
@@ -156,6 +157,7 @@ target_include_directories(boids_core PUBLIC
     ${BGFX_CMAKE_DIR}/bgfx/include
     ${BGFX_CMAKE_DIR}/bx/include
     ${BGFX_CMAKE_DIR}/bimg/include
+    ${CMAKE_BINARY_DIR}/include/generated/shaders
 )
 
 # Add link libraries for boids_core
@@ -186,6 +188,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 # Add spdlog
 set(SPDLOG_DIR ${THIRDPARTY_DIR}/spdlog)
 add_subdirectory(${SPDLOG_DIR} ${CMAKE_BINARY_DIR}/spdlog)
+
+add_subdirectory(shader)
+add_dependencies(${PROJECT_NAME} Shaders)
+add_dependencies(boids_core Shaders)
 
 add_subdirectory(tests)
 

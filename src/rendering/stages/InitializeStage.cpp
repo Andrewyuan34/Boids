@@ -1,6 +1,18 @@
 #include "InitializeStage.h"
 #include "../Pipeline.h"
 #include <iostream>
+#include <bgfx/bgfx.h>
+#include <bgfx/embedded_shader.h>
+
+// Include generated shader headers
+#define SHADER_NAME vs_simple
+#include "ShaderIncluder.h"
+#define SHADER_NAME fs_simple
+#include "ShaderIncluder.h"
+
+// Define embedded shader array
+static const bgfx::EmbeddedShader s_embeddedShaders[] = {
+    BGFX_EMBEDDED_SHADER(vs_simple), BGFX_EMBEDDED_SHADER(fs_simple), BGFX_EMBEDDED_SHADER_END()};
 
 namespace Boids {
 namespace Rendering {
@@ -28,8 +40,19 @@ void InitializeStage::OnDetach() {
 }
 
 void InitializeStage::SetupBGFX() {
-    // TODO: Implement BGFX setup
-    std::cout << "InitializeStage: Setting up BGFX..." << std::endl;
+    // Create shader program
+    bgfx::RendererType::Enum type = bgfx::getRendererType();
+
+    // Create vertex shader
+    bgfx::ShaderHandle vsh = bgfx::createEmbeddedShader(s_embeddedShaders, type, "vs_simple");
+
+    // Create fragment shader
+    bgfx::ShaderHandle fsh = bgfx::createEmbeddedShader(s_embeddedShaders, type, "fs_simple");
+
+    // Create shader program
+    m_Program = bgfx::createProgram(vsh, fsh, true);
+
+    std::cout << "InitializeStage: BGFX shader setup completed" << std::endl;
 }
 
 }  // namespace Rendering
