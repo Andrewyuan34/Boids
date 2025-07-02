@@ -1,5 +1,6 @@
 #pragma once
 #include "../PipelineStage.h"
+#include <bgfx/bgfx.h>
 
 namespace Boids {
 namespace Rendering {
@@ -15,6 +16,7 @@ class InitializeStage : public PipelineStage {
 
    private:
     bool m_Initialized = false;
+    bgfx::ProgramHandle m_Program = BGFX_INVALID_HANDLE;
     void SetupBGFX();
 };
 
