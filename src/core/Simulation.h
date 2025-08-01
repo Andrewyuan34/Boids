@@ -11,7 +11,7 @@ class Simulation {
     Simulation();
     ~Simulation();
 
-    void initialize();
+    void initialize(GLFWwindow* window, int width, int height);
     void update(float deltaTime);
     void render();
 

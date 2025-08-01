@@ -19,7 +19,7 @@ class Application {
     static Application* s_Instance;
     GLFWwindow* m_Window = nullptr;
     bool m_Running = true;
-    std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
+    //std::unique_ptr<Boids::ImGuiLayer> m_ImGuiLayer;
     Boids::Simulation m_Simulation;
     std::unique_ptr<WindowInfo> m_WindowInfo = std::make_unique<WindowInfo>();
     std::unique_ptr<Boids::Utils::Camera> m_Camera;
@@ -59,8 +59,6 @@ static void glfw_error_callback(int error, const char* description) {
 }
 
 bool Application::init() {
-    m_Simulation.initialize();
-
     // Initialize GLFW
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit()) return false;
@@ -71,6 +69,8 @@ bool Application::init() {
         glfwTerminate();
         return false;
     }
+
+    m_Simulation.initialize(m_Window, 1280, 720);
 
     glfwMakeContextCurrent(m_Window);
     glfwSwapInterval(1);
@@ -92,8 +92,8 @@ bool Application::init() {
     glEnable(GL_DEPTH_TEST);
 
     // Create and initialize ImGui layer
-    m_ImGuiLayer = Boids::ImGuiLayer::Create(m_Window);
-    m_ImGuiLayer->OnAttach();
+    //m_ImGuiLayer = Boids::ImGuiLayer::Create(m_Window);
+    //m_ImGuiLayer->OnAttach();
 
     int width = 0, height = 0;
     glfwGetWindowSize(m_Window, &width, &height);
@@ -101,7 +101,7 @@ bool Application::init() {
     m_Camera = std::make_unique<Boids::Utils::Camera>(45.0f, aspect, 0.1f, 100.0f);
 
     // TODO: Make sure the widget is adjusted to the window size
-    m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
+    /*m_ImGuiLayer->RegisterWindow("Boids Parameters", [this]() {
         auto& params = BoidsParams::get();
 
         if (ImGui::CollapsingHeader("Global Simulation Parameters",
@@ -131,7 +131,7 @@ bool Application::init() {
                 options.Reset();
             }
         }
-    });
+    });*/
 
     return true;
 }
@@ -146,15 +146,17 @@ void Application::mainLoop() {
         // Update viewport
         int width = 0, height = 0;
         glfwGetWindowSize(m_Window, &width, &height);
-        glViewport(0, 0, width, height);
         m_WindowInfo->resize(width, height);
+
+
+        //glViewport(0, 0, width, height);
 
         if (m_Camera) {
             m_Camera->setAspectRatio(static_cast<float>(width) / height);
         }
 
         // Use ImGui layer to update and render
-        m_ImGuiLayer->OnUpdate(0.0f, m_WindowInfo.get());
+        //m_ImGuiLayer->OnUpdate(0.0f, m_WindowInfo.get());
 
         // Update simulation
         m_Simulation.update(0.001f);
@@ -167,8 +169,8 @@ void Application::mainLoop() {
 }
 
 void Application::cleanup() {
-    m_ImGuiLayer->OnDetach();
-    m_ImGuiLayer.reset();
+    //m_ImGuiLayer->OnDetach();
+    //m_ImGuiLayer.reset();
 
     glfwDestroyWindow(m_Window);
     glfwTerminate();
