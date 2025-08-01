@@ -5,6 +5,10 @@
 #include <bgfx/bgfx.h>
 #include <bgfx/embedded_shader.h>
 
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
+
 // Disable DirectX shaders on Linux (following openblack's approach)
 #if BX_PLATFORM_LINUX
 #undef BGFX_EMBEDDED_SHADER_DXBC
@@ -38,6 +42,20 @@ void InitializeStage::Execute(Pipeline& pipeline) {
         m_Initialized = true;
         std::cout << "InitializeStage: BGFX setup completed" << std::endl;
     }
+    std::cout << "InitializeStage: Executing" << std::endl;
+
+    static float time = 0.0f;
+    time += 0.001f;
+    
+    uint32_t r = (uint32_t)((sin(time) + 1.0f) * 127.5f);
+    uint32_t g = (uint32_t)((sin(time + 2.0f) + 1.0f) * 127.5f);
+    uint32_t b = (uint32_t)((sin(time + 4.0f) + 1.0f) * 127.5f);
+    
+    uint32_t color = 0xFF000000 | (b << 16) | (g << 8) | r;
+
+    bgfx::setViewClear(0, BGFX_CLEAR_COLOR, color, 1.0f, 0);
+    
+    bgfx::touch(0);
 }
 
 void InitializeStage::OnAttach() {

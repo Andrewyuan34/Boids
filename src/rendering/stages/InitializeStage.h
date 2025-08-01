@@ -1,6 +1,8 @@
 #pragma once
 #include "../PipelineStage.h"
 #include <bgfx/bgfx.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Boids {
 namespace Rendering {
@@ -15,9 +17,12 @@ class InitializeStage : public PipelineStage {
     void OnDetach() override;
 
    private:
+    
+    void SetupBGFX();
+    
     bool m_Initialized = false;
     bgfx::ProgramHandle m_Program = BGFX_INVALID_HANDLE;
-    void SetupBGFX();
+
 };
 
 }  // namespace Rendering
